@@ -1,0 +1,64 @@
+
+In-Line Comment:
+<InLineComment> <Comment Text> <Editor-Line End>
+
+Namespace Declaration:
+<"namespace"> (<Member Expression> <Identifier>) <cBraceOpen> <Class Declaration>* <cBraceClose>
+
+Class Declaration:
+<"class"> <Identifier> <cBraceOpen> {<Field Declaration> | <Method Declaration>} <cBraceClose>
+
+Field Declaration:
+<Type> <Identifier> <Statement End>
+
+Method Declaration:
+<Type> <Identifier> <rBraceOpen> ({<Type> <Identifier> <Comma>} <Type> <Identifier>)? <rBraceClose> <cBraceOpen> {<Statement> | <Expression>} <cBraceClose>
+
+
+Compound Statement:
+<cBraceOpen> <Statement>* <cBraceClose>
+
+Conditional Statement:
+<Statement "if"> <rBraceOpen> <Expression> <rBraceClose> <Statement> (<Statement "else"> <Statement>)?
+
+Loop Statement:
+(<Statement "do"> <Statement> <Statement "while"> <rBraceOpen> <Expression> <rBraceClose> <Statement End>) | (<Statement "while"> <rBraceOpen> <Expression> <rBraceClose> <Statement>)
+
+Return Statement:
+<Statement "return"> <Expression>? <Statement End>
+
+Variable Definition Statement:
+<Type> <Identifier> <Expression>? {<Comma> <Identifier> <Expression>?} <Statement End>
+
+Expression Statement:
+<Expression> <Statement End>
+
+Nothing Statement:
+<Statement End>
+
+
+Literal:
+<Integer Literal> | <String Literal>
+
+Expression:
+(<Literal> | <Identifier>) | (<rBraceOpen> <Expression> <cBraceClose>)
+
+Member Expression:
+<Expression> <AccessOperator> <Identifier>
+
+Binary Expression:
+<Expression> <Binary-Operator> <Expression>
+
+Unary Pre-Increment Expression:
+<Unary Pre-Operator> <Expression>
+
+Unary Post-Increment Expression:
+<Expression> <Unary Post-Operator>
+
+Indexing Expression:
+<Expression> <sBraceOpen> <Expression> <sBraceClose>
+
+Method-Call Expression:
+<Expression> <rBraceOpen> (<Expression> {<Comma> <Expression>})? <rBraceClose>
+
+
