@@ -43,7 +43,7 @@ namespace Shpoon.Parse.Nodes_2
 
         public override string ToString(string prevIndent)
         {
-            return prevIndent + $"return {Expression.ToString()};";
+            return $"{prevIndent}return {Expression.ToString()};";
         }
     }
 }

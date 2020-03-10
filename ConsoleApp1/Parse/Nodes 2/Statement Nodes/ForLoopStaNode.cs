@@ -74,11 +74,11 @@ namespace Shpoon.Parse.Nodes_2
 
         public override string ToString(string prevIndent)
         {
-            string indent = prevIndent + "    ";
-            string ret = prevIndent + $"for({Definitions.ToString()};{Condition.ToString()};{string.Join(", ", expressions)})" + Environment.NewLine;
-            ret += Body.ToString(indent);
+            StringBuilder ret = new StringBuilder();
+            ret.AppendLine(prevIndent + $"for({Definitions.ToString()}; {Condition.ToString()}; {string.Join(", ", expressions)})");
+            ret.Append(Body.ToString(Body is CompoundStaNode ? prevIndent : prevIndent + "    "));
 
-            return ret;
+            return ret.ToString();
         }
 
     }

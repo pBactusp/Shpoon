@@ -49,16 +49,18 @@ namespace Shpoon.Parse.Nodes_2
         public override string ToString(string prevIndent)
         {
             string indent = prevIndent + "    ";
-            string ret = prevIndent + $"if ({Condition.ToString()})";
-            ret += Environment.NewLine + BodyTrue.ToString(indent);
+            StringBuilder ret = new StringBuilder();
+            ret.AppendLine(prevIndent + $"if ({Condition.ToString()})");
+
+            ret.Append(BodyTrue.ToString(BodyTrue is CompoundStaNode ? prevIndent : indent));
             
             if (BodyFalse != null)
             {
-                ret += prevIndent + "else" + Environment.NewLine;
-                ret += BodyFalse.ToString(indent) + Environment.NewLine;
+                ret.AppendLine(prevIndent + "else");
+                ret.AppendLine(BodyFalse.ToString(BodyFalse is CompoundStaNode ? prevIndent : indent));
             }
 
-            return ret;
+            return ret.ToString();
         }
     }
 }

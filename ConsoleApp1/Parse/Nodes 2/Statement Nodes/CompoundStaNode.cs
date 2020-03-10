@@ -53,14 +53,20 @@ namespace Shpoon.Parse.Nodes_2
         public override string ToString(string prevIndent)
         {
             string indent = prevIndent + "    ";
-            string ret = prevIndent + "{" + Environment.NewLine;
+            StringBuilder ret = new StringBuilder();
+            ret.AppendLine(prevIndent + "{");
+
+            //for (int i = 0; i < statements.Count - 1; i++)
+            //{
+            //    ret.Append(statements[i].ToString(indent));
+            //}
 
             foreach (var sta in statements)
-                ret += sta.ToString(indent) + Environment.NewLine;
+                ret.AppendLine(sta.ToString(indent));
 
-            ret += prevIndent + "}" + Environment.NewLine;
+            ret.AppendLine(prevIndent + "}");
 
-            return ret;
+            return ret.ToString();
         }
     }
 }

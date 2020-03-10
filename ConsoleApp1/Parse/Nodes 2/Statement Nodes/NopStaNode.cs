@@ -31,7 +31,7 @@ namespace Shpoon.Parse.Nodes_2
 
         public override string ToString(string prevIndent)
         {
-            return prevIndent + Value + Environment.NewLine;
+            return prevIndent + Value;
         }
 
     }

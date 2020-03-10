@@ -52,13 +52,12 @@ namespace Shpoon.Parse.Nodes_2
 
         public override string ToString(string prevIndent)
         {
-            string indent = prevIndent + "    ";
-            string ret = prevIndent + "do" + Environment.NewLine;
-            ret += Body.ToString(indent);
+            StringBuilder ret = new StringBuilder();
+            ret.AppendLine(prevIndent + "do");
+            ret.Append(Body.ToString(Body is CompoundStaNode ? prevIndent : prevIndent + "    "));
+            ret.Append(prevIndent + $"while({Condition.ToString()});");
 
-            ret += prevIndent + $"while({Condition.ToString()});" + Environment.NewLine; ;
-
-            return ret;
+            return ret.ToString();
         }
 
     }
