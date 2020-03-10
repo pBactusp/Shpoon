@@ -23,7 +23,7 @@ namespace Shpoon
             lexer.AddDefinition(new TokenDefinition(TokenType.accessor, "(public|private)")); // ([^a-zA-Z0-9])
 
             lexer.AddDefinition(new TokenDefinition(TokenType.typeSpecifier, "(bool|byte|short|int|float|double|char|string)")); // ([^a-zA-Z0-9])
-            lexer.AddDefinition(new TokenDefinition(TokenType.constant, @"\d+"));
+            lexer.AddDefinition(new TokenDefinition(TokenType.constant, @"\d*[\.]?\d+"));
             lexer.AddDefinition(new TokenDefinition(TokenType.@string, "\"(\\.|[^\"\\\\]*)\""));
 
             lexer.AddDefinition(new TokenDefinition(TokenType.accessOperator, "[.]"));
