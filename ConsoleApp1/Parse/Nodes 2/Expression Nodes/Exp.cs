@@ -33,22 +33,26 @@ namespace Shpoon.Parse.Nodes_2
                     return new LiteralExpNode("STRING", tStr[0].Value);
             }
 
-            if (tStr.Match(0, TokenType.typeSpecifier, TokenType.identifier))
+            if (tStr[0].Type == TokenType.typeSpecifier || tStr[0].Type == TokenType.identifier)
             {
-                VariableDefExpNode vdNode = new VariableDefExpNode(tStr[0].Value);
-
-                var defs = tStr.GetRangeUntil(1, TokenType.lineEnd).Split(false, TokenType.comma);
-                
-                foreach (var defTStr in defs)
+                if (tStr[1].Type == TokenType.identifier)
                 {
-                    string varName = defTStr[0].Value;
-                    var varDef = Exp.Parse(defTStr);
+                    VariableDefExpNode vdNode = new VariableDefExpNode(tStr[0].Value);
 
-                    vdNode.AddVariable(varName, varDef);
+                    var defs = tStr.GetRangeUntil(1, TokenType.lineEnd).Split(false, TokenType.comma);
+
+                    foreach (var defTStr in defs)
+                    {
+                        string varName = defTStr[0].Value;
+                        var varDef = Exp.Parse(defTStr);
+
+                        vdNode.AddVariable(varName, varDef);
+                    }
+
+                    return vdNode;
                 }
-
-                return vdNode;
             }
+
 
             if ((tStr[0].Type == TokenType.prepostOperator || tStr[0].Type == TokenType.preOperator) && tStr[1].Type == TokenType.identifier)
             {

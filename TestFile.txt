@@ -23,25 +23,19 @@ namespace Shpoon
 				
 				return v;
 			}
-			int a = 4, b = 5;
-			// int i, a, b;
-			for (int i = 0, a = 4, b = 5; i < 10; i++, a++, b--)
-			{
-				
-			}
-		
-		"{forToken} {rBraceOpen}"
-		TokenString[] forParts = tStr.GetBetweenBrackets(ref index).Split(TokenType.lineEnd);
-		
-		
-		"{forToken} {rBraceOpen} {typeNameToken} \EXPRESSION ({commaToken} \EXPRESSION) * {lineEndToken} \EXPRESSION {lineEndToken} (\EXPRESSION ({commaToken} \EXPRESSION) *)?"
-		"{forToken} {rBraceOpen} (\EXPRESSION ({commaToken} \EXPRESSION) *)? {lineEndToken} \EXPRESSION {lineEndToken} (\EXPRESSION ({commaToken} \EXPRESSION) *)?"
-		
-		a = 10 * (b + 17) + 1;
-		
-		"({identifierToken}|{constantToken}|{rBraceOpen}{Anything}*{rBraceClose}) {binaryOperatorToken} ({identifierToken}|{constantToken}|{rBraceOpen}{Anything}*{rBraceClose})"
-		
-		
         }
     }
+	
+	class hhh
+	{
+		public hhh()
+		{
+			
+		}
+		
+	}
 }
+
+
+
+

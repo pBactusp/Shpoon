@@ -47,6 +47,7 @@
     <Compile Include="MyExtentions.cs" />
     <Compile Include="Parse\Nodes 2\ArgumentNode.cs" />
     <Compile Include="Parse\Nodes 2\ClassNode.cs" />
+    <Compile Include="Parse\Nodes 2\CtorNode.cs" />
     <Compile Include="Parse\Nodes 2\Expression Nodes\BinaryExpNode.cs" />
     <Compile Include="Parse\Nodes 2\Expression Nodes\Exp.cs" />
     <Compile Include="Parse\Nodes 2\Expression Nodes\ExpressionNode.cs" />

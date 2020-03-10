@@ -34,15 +34,33 @@ namespace Shpoon.Parse.Nodes_2
 
             while (iRangeIndex < internalRange.Count)
             {
-                if (internalRange.Match(iRangeIndex, TokenType.typeSpecifier, TokenType.identifier))
+                Node tempNode;
+
+
+                if ((tempNode = CtorNode.Parse(node.Name, internalRange, ref iRangeIndex)) != null)
                 {
-                    if (internalRange.Match(iRangeIndex + 2, TokenType.rBraceOpen))
-                        node.AddMethod(MethodNode.Parse(internalRange, ref iRangeIndex));
-                    else
-                        node.AddField(FieldNode.Parse(internalRange, ref iRangeIndex));
+                    node.AddCtor(tempNode as CtorNode);
+                }
+                else if ((tempNode = MethodNode.Parse(internalRange, ref iRangeIndex)) != null)
+                {
+                    node.AddMethod(tempNode as MethodNode);
+                }
+                else if ((tempNode = FieldNode.Parse(internalRange, ref iRangeIndex)) != null)
+                {
+                    node.AddField(tempNode as FieldNode);
                 }
                 else
                     iRangeIndex++;
+
+                //if (internalRange.Match(iRangeIndex, TokenType.typeSpecifier, TokenType.identifier))
+                //{
+                //    if (internalRange.Match(iRangeIndex + 2, TokenType.rBraceOpen))
+                //        node.AddMethod(MethodNode.Parse(internalRange, ref iRangeIndex));
+                //    else
+                //        node.AddField(FieldNode.Parse(internalRange, ref iRangeIndex));
+                //}
+                //else
+                //    iRangeIndex++;
             }
 
             index += iRangeIndex;
@@ -52,6 +70,7 @@ namespace Shpoon.Parse.Nodes_2
 
         private List<FieldNode> fields;
         private List<MethodNode> methods;
+        private List<CtorNode> ctors;
 
 
         public ClassNode(string name) : base()
@@ -59,6 +78,7 @@ namespace Shpoon.Parse.Nodes_2
             Name = name;
             fields = new List<FieldNode>();
             methods = new List<MethodNode>();
+            ctors = new List<CtorNode>();
 
             Namespace = null;
         }
@@ -81,6 +101,11 @@ namespace Shpoon.Parse.Nodes_2
         {
             method.Class = this;
             methods.Add(method);
+        }
+        public void AddCtor(CtorNode ctor)
+        {
+            ctor.Class = this;
+            ctors.Add(ctor);
         }
 
 

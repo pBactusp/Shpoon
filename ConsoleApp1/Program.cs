@@ -20,6 +20,8 @@ namespace Shpoon
             Lexer lexer = new Lexer();
             Parser parser = new Parser();
 
+            lexer.AddDefinition(new TokenDefinition(TokenType.accessor, "(public|private)")); // ([^a-zA-Z0-9])
+
             lexer.AddDefinition(new TokenDefinition(TokenType.typeSpecifier, "(bool|byte|short|int|float|double|char|string)")); // ([^a-zA-Z0-9])
             lexer.AddDefinition(new TokenDefinition(TokenType.constant, @"\d+"));
             lexer.AddDefinition(new TokenDefinition(TokenType.@string, "\"(\\.|[^\"\\\\]*)\""));
@@ -73,21 +75,20 @@ namespace Shpoon
 
             Console.WriteLine(source);
 
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
+            for (int i = 0; i < 3; i++)
+                Console.WriteLine();
+
+            TokenString tokens = new TokenString();
 
             foreach (var token in lexer.Tokenize(source))
             {
+                tokens.Add(token);
                 Console.WriteLine($"{token.Value} {token.Type.ToString()}");
             }
 
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
+            for (int i = 0; i < 3; i++)
+                Console.WriteLine();
 
-            TokenString tokens = new TokenString();
-            tokens.AddRange(lexer.Tokenize(source));
 
             int zero = 0;
             var node = NamespaceNode.Parse(tokens, ref zero);

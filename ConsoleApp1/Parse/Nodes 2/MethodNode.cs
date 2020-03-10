@@ -13,6 +13,14 @@ namespace Shpoon.Parse.Nodes_2
         {
             int startIndex = index;
 
+            var accessors = new List<string>();
+
+            while (tStr[index].Type == TokenType.accessor)
+            {
+                accessors.Add(tStr[index].Value);
+                index++;
+            }
+
             if (!tStr.Match(index, TokenType.typeSpecifier, TokenType.identifier, TokenType.rBraceOpen))
                 return null;
 
@@ -38,18 +46,20 @@ namespace Shpoon.Parse.Nodes_2
                 return null;
             }
 
-            MethodNode node = new MethodNode(type, name, args, sta);
+            MethodNode node = new MethodNode(type, name, accessors, args, sta);
 
             return node;
         }
 
 
         public List<ArgumentNode> Arguments;
+        public List<string> Accessors;
 
-        private MethodNode(string type, string name, List<ArgumentNode> arguments, CompoundStaNode compoundStatement)
+        protected MethodNode(string type, string name, List<string> accessors, List<ArgumentNode> arguments, CompoundStaNode compoundStatement)
         {
             Name = name;
             Type = type;
+            Accessors = accessors;
             Arguments = arguments;
 
             Statements = compoundStatement;

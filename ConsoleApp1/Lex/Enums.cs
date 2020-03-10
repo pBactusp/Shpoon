@@ -28,6 +28,7 @@ namespace Shpoon.Lex
 
         @namespace = 101,
         @class = 102,
+        accessor = 103,
 
         ifStatement = 201,
         elseStatement = 202,
