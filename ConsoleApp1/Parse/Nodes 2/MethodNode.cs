@@ -90,7 +90,7 @@ namespace Shpoon.Parse.Nodes_2
                     ret.Append($", {Arguments[i].Type} {Arguments[i].Name}");
             }
 
-            ret.Append(')' + Environment.NewLine);
+            ret.AppendLine(")");
 
             ret.Append(Statements.ToString(prevIndent));
 

@@ -65,7 +65,7 @@ namespace Shpoon.Parse.Nodes_2
                 //    iRangeIndex++;
             }
 
-            index += iRangeIndex;
+            //index += iRangeIndex;
             return node;
         }
 
@@ -119,18 +119,22 @@ namespace Shpoon.Parse.Nodes_2
             ret.Append(AccessorsToString());
             ret.Append("class " + Name + Environment.NewLine + prevIndent + '{' + Environment.NewLine);
 
-            if (fields.Count > 0)
-            {
-                foreach (var field in fields)
-                    ret.Append(field.ToString(indent) + Environment.NewLine);
+            foreach (var field in fields)
+                ret.Append(field.ToString(indent));
 
+            if (fields.Count > 0 && (ctors.Count > 0 || methods.Count > 0))
                 ret.AppendLine();
-            }
+
+            foreach (var ctor in ctors)
+                ret.Append(ctor.ToString(indent));
+
+            if (ctors.Count > 0 && methods.Count > 0)
+                ret.AppendLine();
 
             foreach (var method in methods)
-                ret.Append(method.ToString(indent) + Environment.NewLine);
+                ret.Append(method.ToString(indent));
 
-            ret.Append(prevIndent + '}' + Environment.NewLine);
+            ret.AppendLine(prevIndent + '}');
 
             return ret.ToString();
         }

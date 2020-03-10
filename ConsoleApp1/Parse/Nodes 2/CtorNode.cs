@@ -22,19 +22,26 @@ namespace Shpoon.Parse.Nodes_2
             }
 
             if (!(tStr.Match(index, TokenType.identifier, TokenType.rBraceOpen) && tStr[index].Value == className))
+            {
+                index = startIndex;
                 return null;
+            }
 
             string type = tStr[index].Value;
-            string name = tStr[index].Value;
+            string name = "ctor";
             index++;
 
             var args = new List<ArgumentNode>();
 
-            var argTokens = tStr.GetRangeInBrackets(ref index)?.Split(false, TokenType.comma);
+            var argTokens = tStr.GetRangeInBrackets(ref index);
 
-            if (argTokens != null)
-                foreach (var argTs in argTokens)
+            if (argTokens != null && argTokens.Count > 0)
+            {
+                var argTokensSep = argTokens.Split(false, TokenType.comma);
+
+                foreach (var argTs in argTokensSep)
                     args.Add(new ArgumentNode(argTs[0].Value, argTs[1].Value));
+            }
 
             index = tStr.FindNextIndex(index, TokenType.cBraceOpen);
 

@@ -11,8 +11,10 @@ namespace Shpoon.Parse.Nodes_2
     {
         public static CompoundStaNode Parse(TokenString tStr, ref int index)
         {
-            if (tStr.Match(index, TokenType.cBraceOpen))
-                index++;
+            if (!tStr.Match(index, TokenType.cBraceOpen))
+                return null;
+
+            index++;
 
             CompoundStaNode node = new CompoundStaNode();
 
@@ -55,11 +57,6 @@ namespace Shpoon.Parse.Nodes_2
             string indent = prevIndent + "    ";
             StringBuilder ret = new StringBuilder();
             ret.AppendLine(prevIndent + "{");
-
-            //for (int i = 0; i < statements.Count - 1; i++)
-            //{
-            //    ret.Append(statements[i].ToString(indent));
-            //}
 
             foreach (var sta in statements)
                 ret.AppendLine(sta.ToString(indent));
