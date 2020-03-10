@@ -45,6 +45,15 @@ namespace Shpoon.Parse.Nodes_2
 
                     node.AddClass(classNode);
                 }
+                else if (currentToken.Type == TokenType.@namespace)
+                {
+                    NamespaceNode namespaceNode = new NamespaceNode(Exp.Parse(tStr.GetRangeUntil(ref index, TokenType.cBraceOpen)));
+
+                    if (namespaceNode == null)
+                        break;
+
+                    node.AddNamespace(namespaceNode);
+                }
                 else
                     cRangeIndex++;
             }
@@ -53,14 +62,22 @@ namespace Shpoon.Parse.Nodes_2
             return node;
         }
 
+        public static NamespaceNode CreateGlobalNamespaceNode(string assemblyName = "Assembly")
+        {
+            NamespaceNode node = new NamespaceNode(Exp.Parse(new TokenString(new Token() { Type = TokenType.identifier, Value = assemblyName })));
+            return node;
+        }
 
-
+        public NamespaceNode Namespace;
+        private List<NamespaceNode> namespaces;
         private List<ClassNode> classes;
 
         private NamespaceNode(ExpressionNode nameExpression)
         {
+            Namespace = null;
             NameExpression = nameExpression;
             classes = new List<ClassNode>();
+            namespaces = new List<NamespaceNode>();
         }
 
         public string Name
@@ -68,17 +85,23 @@ namespace Shpoon.Parse.Nodes_2
             get { return NameExpression.ToString(); }
         }
         public ExpressionNode NameExpression { get; private set; }
-        public ClassNode this[int index]
-        {
-            get { return classes[index]; }
-            set { classes[index] = value; }
-        }
+        //public ClassNode this[int index]
+        //{
+        //    get { return classes[index]; }
+        //    set { classes[index] = value; }
+        //}
 
         public void AddClass(ClassNode classNode)
         {
             classNode.Namespace = this;
             classes.Add(classNode);
         }
+        public void AddNamespace(NamespaceNode namespaceNode)
+        {
+            namespaceNode.Namespace = this;
+            namespaces.Add(namespaceNode);
+        }
+
 
 
         public override string ToString()
@@ -91,7 +114,28 @@ namespace Shpoon.Parse.Nodes_2
             foreach (var cls in classes)
                 ret += cls.ToString(indent) + Environment.NewLine;
 
+            foreach (var nms in namespaces)
+                ret += nms.ToString(indent) + Environment.NewLine;
+
             ret += '}' + Environment.NewLine;
+
+            return ret;
+        }
+
+        public override string ToString(string prevIndent)
+        {
+            string indent = prevIndent + "    ";
+            string ret = $"{prevIndent}namespace {Name}" + Environment.NewLine
+                + prevIndent + '{' + Environment.NewLine;
+
+
+            foreach (var cls in classes)
+                ret += cls.ToString(indent) + Environment.NewLine;
+
+            foreach (var nms in namespaces)
+                ret += nms.ToString(indent) + Environment.NewLine;
+
+            ret += prevIndent + '}' + Environment.NewLine;
 
             return ret;
         }

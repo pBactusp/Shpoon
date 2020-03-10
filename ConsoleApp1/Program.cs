@@ -89,7 +89,7 @@ namespace Shpoon
 
 
             int zero = 0;
-            var node = NamespaceNode.Parse(tokens, ref zero);
+            var node = parser.Parse(tokens, ref zero);
             zero = 0;
 
             Console.WriteLine(node);

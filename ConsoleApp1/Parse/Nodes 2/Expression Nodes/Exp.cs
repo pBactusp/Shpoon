@@ -22,7 +22,6 @@ namespace Shpoon.Parse.Nodes_2
             if (tStr.Last().Type == TokenType.lineEnd)
                 tStr.RemoveAt(tStr.Count - 1);
 
-
             if (tStr.Count == 1)
             {
                 if (tStr[0].Type == TokenType.identifier)
@@ -32,6 +31,7 @@ namespace Shpoon.Parse.Nodes_2
                 else if (tStr[0].Type == TokenType.@string)
                     return new LiteralExpNode("STRING", tStr[0].Value);
             }
+
 
             if (tStr[0].Type == TokenType.typeSpecifier || tStr[0].Type == TokenType.identifier)
             {

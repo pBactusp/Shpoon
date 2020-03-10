@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shpoon.Parse.Nodes_2
 {
-    public class MethodNode : AccessibleNode
+    public class MethodNode : MemberNode
     {
         public static MethodNode Parse(TokenString tStr, ref int index)
         {

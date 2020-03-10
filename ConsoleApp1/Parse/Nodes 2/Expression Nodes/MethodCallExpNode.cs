@@ -36,7 +36,7 @@ namespace Shpoon.Parse.Nodes_2
 
         public override string ToString()
         {
-            return Name + '(' + string.Join(", ", arguments) + ");";
+            return Name + '(' + string.Join(", ", arguments) + ")";
         }
 
     }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Shpoon.Lex;
+using Shpoon.Parse.Nodes_2;
 
 namespace Shpoon.Parse
 {
@@ -23,6 +24,32 @@ namespace Shpoon.Parse
             new string[]{"="},
             new string[]{"++", "--"}
         };
+
+
+        public NamespaceNode GlobalNamespace;
+
+        public Parser()
+        {
+            GlobalNamespace = null;
+        }
+
+        public NamespaceNode Parse(TokenString tStr, ref int index)
+        {
+            GlobalNamespace = NamespaceNode.CreateGlobalNamespaceNode();
+
+            while (index < tStr.Count)
+            {
+                // try parsing namespace. if not null, add to GlobalNamespace
+                NamespaceNode node = NamespaceNode.Parse(tStr, ref index);
+
+                if (node != null)
+                    GlobalNamespace.AddNamespace(node);
+                else
+                    index++;
+            }
+
+            return GlobalNamespace;
+        }
 
 
 

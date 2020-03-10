@@ -18,7 +18,7 @@ namespace Shpoon.Parse.Nodes_2
 
         public override string ToString()
         {
-            return "new " + ClassName + '(' + string.Join(", ", arguments) + ");";
+            return "new " + ClassName + '(' + string.Join(", ", arguments) + ")";
         }
     }
 

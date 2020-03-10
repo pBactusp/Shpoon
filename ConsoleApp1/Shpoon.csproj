@@ -45,10 +45,11 @@
   <ItemGroup>
     <Compile Include="Lex\TokenString.cs" />
     <Compile Include="MyExtentions.cs" />
-    <Compile Include="Parse\Nodes 2\AccessibleNode.cs" />
-    <Compile Include="Parse\Nodes 2\ArgumentNode.cs" />
-    <Compile Include="Parse\Nodes 2\ClassNode.cs" />
-    <Compile Include="Parse\Nodes 2\CtorNode.cs" />
+    <Compile Include="Parse\Nodes 2\Declaration Nodes\AccessibleNode.cs" />
+    <Compile Include="Parse\Nodes 2\Declaration Nodes\ArgumentNode.cs" />
+    <Compile Include="Parse\Nodes 2\Declaration Nodes\Type Declaration Nodes\ClassNode.cs" />
+    <Compile Include="Parse\Nodes 2\Declaration Nodes\Type Declaration Nodes\CtorNode.cs" />
+    <Compile Include="Parse\Nodes 2\Declaration Nodes\MemberNode.cs" />
     <Compile Include="Parse\Nodes 2\Expression Nodes\BinaryExpNode.cs" />
     <Compile Include="Parse\Nodes 2\Expression Nodes\ConstructionExpNode.cs" />
     <Compile Include="Parse\Nodes 2\Expression Nodes\Exp.cs" />
@@ -61,9 +62,9 @@
     <Compile Include="Parse\Nodes 2\Expression Nodes\PreUnaryExpNode.cs" />
     <Compile Include="Parse\Nodes 2\Expression Nodes\UnaryExpNode.cs" />
     <Compile Include="Parse\Nodes 2\Expression Nodes\VariableDefExpNode.cs" />
-    <Compile Include="Parse\Nodes 2\FieldNode.cs" />
-    <Compile Include="Parse\Nodes 2\MethodNode.cs" />
-    <Compile Include="Parse\Nodes 2\NamespaceNode.cs" />
+    <Compile Include="Parse\Nodes 2\Declaration Nodes\FieldNode.cs" />
+    <Compile Include="Parse\Nodes 2\Declaration Nodes\MethodNode.cs" />
+    <Compile Include="Parse\Nodes 2\Declaration Nodes\NamespaceNode.cs" />
     <Compile Include="Parse\Nodes 2\Node.cs" />
     <Compile Include="Parse\Nodes 1\AccessExpNodeAST.cs" />
     <Compile Include="Parse\Nodes 1\ExpressionNodeAST.cs" />
