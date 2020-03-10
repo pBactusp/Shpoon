@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Lex\TokenString.cs" />
     <Compile Include="MyExtentions.cs" />
+    <Compile Include="Parse\Nodes 2\AccessibleNode.cs" />
     <Compile Include="Parse\Nodes 2\ArgumentNode.cs" />
     <Compile Include="Parse\Nodes 2\ClassNode.cs" />
     <Compile Include="Parse\Nodes 2\CtorNode.cs" />

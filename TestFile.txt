@@ -1,6 +1,6 @@
 namespace Shpoon
 {
-    class TestClass
+    public class TestClass
     {
 		string name;
 		

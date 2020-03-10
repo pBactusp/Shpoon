@@ -7,19 +7,13 @@ using System.Threading.Tasks;
 
 namespace Shpoon.Parse.Nodes_2
 {
-    public class MethodNode : Node
+    public class MethodNode : AccessibleNode
     {
         public static MethodNode Parse(TokenString tStr, ref int index)
         {
             int startIndex = index;
 
-            var accessors = new List<string>();
-
-            while (tStr[index].Type == TokenType.accessor)
-            {
-                accessors.Add(tStr[index].Value);
-                index++;
-            }
+            var accessors = AccessibleNode.GetAccessors(tStr, ref index);
 
             if (!tStr.Match(index, TokenType.typeSpecifier, TokenType.identifier, TokenType.rBraceOpen))
                 return null;
@@ -53,9 +47,8 @@ namespace Shpoon.Parse.Nodes_2
 
 
         public List<ArgumentNode> Arguments;
-        public List<string> Accessors;
 
-        protected MethodNode(string type, string name, List<string> accessors, List<ArgumentNode> arguments, CompoundStaNode compoundStatement)
+        protected MethodNode(string type, string name, List<string> accessors, List<ArgumentNode> arguments, CompoundStaNode compoundStatement) : base(accessors)
         {
             Name = name;
             Type = type;
@@ -84,21 +77,24 @@ namespace Shpoon.Parse.Nodes_2
 
         public override string ToString(string prevIndent)
         {
-            string ret = prevIndent + $"{Type} {Name}(";
+            StringBuilder ret = new StringBuilder();
+            ret.Append(prevIndent);
+            ret.Append(AccessorsToString());
+            ret.Append($"{Type} {Name}(");
 
             if (Arguments.Count > 0)
             {
-                ret += $"{Arguments[0].Type} {Arguments[0].Name}";
+                ret.Append($"{Arguments[0].Type} {Arguments[0].Name}");
 
                 for (int i = 1; i < Arguments.Count; i++)
-                    ret += $", {Arguments[i].Type} {Arguments[i].Name}";
+                    ret.Append($", {Arguments[i].Type} {Arguments[i].Name}");
             }
 
-            ret += ')' + Environment.NewLine;
+            ret.Append(')' + Environment.NewLine);
 
-            ret += Statements.ToString(prevIndent);
+            ret.Append(Statements.ToString(prevIndent));
 
-            return ret;
+            return ret.ToString();
         }
     }
 }

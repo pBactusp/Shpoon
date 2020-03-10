@@ -34,7 +34,9 @@ namespace Shpoon.Parse.Nodes_2
 
             while (cRangeIndex < classesRange.Count)
             {
-                if (classesRange[cRangeIndex].Type == TokenType.@class)
+                Token currentToken = classesRange[cRangeIndex];
+
+                if (currentToken.Type == TokenType.accessor || currentToken.Type == TokenType.@class)
                 {
                     ClassNode classNode = ClassNode.Parse(classesRange, ref cRangeIndex);
 

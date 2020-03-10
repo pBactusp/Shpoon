@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace Shpoon.Parse.Nodes_2
 {
-    public class ClassNode : Node
+    public class ClassNode : AccessibleNode
     {
         public static ClassNode Parse(TokenString tStr, ref int index)
         {
+            var accessors = AccessibleNode.GetAccessors(tStr, ref index);
+
             if (!tStr.Match(index, TokenType.@class, TokenType.identifier, TokenType.cBraceOpen))
                 return null;
 
@@ -18,7 +20,7 @@ namespace Shpoon.Parse.Nodes_2
 
             index++;
 
-            ClassNode node = new ClassNode(tStr[index].Value);
+            ClassNode node = new ClassNode(tStr[index].Value, accessors);
 
             index++;
 
@@ -73,7 +75,7 @@ namespace Shpoon.Parse.Nodes_2
         private List<CtorNode> ctors;
 
 
-        public ClassNode(string name) : base()
+        public ClassNode(string name, List<string> accessors) : base(accessors)
         {
             Name = name;
             fields = new List<FieldNode>();
@@ -112,22 +114,25 @@ namespace Shpoon.Parse.Nodes_2
         public override string ToString(string prevIndent)
         {
             string indent = prevIndent + "    ";
-            string ret = prevIndent + "class " + Name + Environment.NewLine + prevIndent + '{' + Environment.NewLine;
+            StringBuilder ret = new StringBuilder();
+            ret.Append(prevIndent);
+            ret.Append(AccessorsToString());
+            ret.Append("class " + Name + Environment.NewLine + prevIndent + '{' + Environment.NewLine);
 
             if (fields.Count > 0)
             {
                 foreach (var field in fields)
-                    ret += field.ToString(indent) + Environment.NewLine;
+                    ret.Append(field.ToString(indent) + Environment.NewLine);
 
-                ret += Environment.NewLine;
+                ret.AppendLine();
             }
 
             foreach (var method in methods)
-                ret += method.ToString(indent) + Environment.NewLine;
+                ret.Append(method.ToString(indent) + Environment.NewLine);
 
-            ret += prevIndent + '}' + Environment.NewLine;
+            ret.Append(prevIndent + '}' + Environment.NewLine);
 
-            return ret;
+            return ret.ToString();
         }
     }
 }

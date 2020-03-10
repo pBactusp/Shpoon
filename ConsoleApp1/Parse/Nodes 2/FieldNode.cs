@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace Shpoon.Parse.Nodes_2
 {
-    public class FieldNode : Node
+    public class FieldNode : AccessibleNode
     {
         public static FieldNode Parse(TokenString tStr, ref int index)
         {
+            var accessors = AccessibleNode.GetAccessors(tStr, ref index);
+
             if (!tStr.Match(index, TokenType.typeSpecifier, TokenType.identifier, TokenType.lineEnd))
                 return null;
 
@@ -19,13 +21,13 @@ namespace Shpoon.Parse.Nodes_2
             string name = tStr[index].Value;
             index++;
 
-            FieldNode node = new FieldNode(type, name);
+            FieldNode node = new FieldNode(type, name, accessors);
 
             return node;
         }
 
 
-        public FieldNode(string type, string name)
+        public FieldNode(string type, string name, List<string> accessors) : base(accessors)
         {
             Name = name;
             Type = type;
@@ -40,7 +42,7 @@ namespace Shpoon.Parse.Nodes_2
 
         public override string ToString(string prevIndent)
         {
-            return prevIndent + $"{Type} {Name};";
+            return prevIndent + AccessorsToString() + Type + ' ' + Name;
         }
     }
 }
