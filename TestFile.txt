@@ -15,6 +15,7 @@ namespace Shpoon
 				do
 				{
 					v++;
+					hhh a = new hhh();
 				}
 				while (v < 10.2);
 				;

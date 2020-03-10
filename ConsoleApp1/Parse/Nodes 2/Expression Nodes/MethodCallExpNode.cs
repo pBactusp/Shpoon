@@ -8,7 +8,7 @@ namespace Shpoon.Parse.Nodes_2
 {
     public class MethodCallExpNode : ExpressionNode
     {
-        private List<ExpressionNode> arguments;
+        protected List<ExpressionNode> arguments;
 
         public MethodCallExpNode(string name)
         {
@@ -16,7 +16,7 @@ namespace Shpoon.Parse.Nodes_2
             arguments = new List<ExpressionNode>();
         }
 
-        public string Name { get; private set; }
+        public string Name { get; protected set; }
         public ExpressionNode this[int index]
         {
             get { return arguments[index]; }
@@ -27,5 +27,17 @@ namespace Shpoon.Parse.Nodes_2
         {
             arguments.Add(argument);
         }
+
+
+        //public override string ToString(string prevIndent)
+        //{
+        //    return prevIndent + Name + '(' + string.Join(", ", arguments) + ");";
+        //}
+
+        public override string ToString()
+        {
+            return Name + '(' + string.Join(", ", arguments) + ");";
+        }
+
     }
 }

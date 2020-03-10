@@ -14,9 +14,6 @@ namespace Shpoon
     {
         static void Main(string[] args)
         {
-            //int a = 5;
-
-
             Lexer lexer = new Lexer();
             Parser parser = new Parser();
 
@@ -32,6 +29,7 @@ namespace Shpoon
             lexer.AddDefinition(new TokenDefinition(TokenType.prepostOperator, @"(\+\+|\-\-)"));
             lexer.AddDefinition(new TokenDefinition(TokenType.comma, "[,]"));
             lexer.AddDefinition(new TokenDefinition(TokenType.binaryOperator, "(\\+|-|=|\\*|\\/|\\<|\\>)"));
+            lexer.AddDefinition(new TokenDefinition(TokenType.@new, "new"));
 
             lexer.AddDefinition(new TokenDefinition(TokenType.lineEnd, "[;]"));
 

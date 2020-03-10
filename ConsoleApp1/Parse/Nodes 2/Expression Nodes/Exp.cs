@@ -53,7 +53,6 @@ namespace Shpoon.Parse.Nodes_2
                 }
             }
 
-
             if ((tStr[0].Type == TokenType.prepostOperator || tStr[0].Type == TokenType.preOperator) && tStr[1].Type == TokenType.identifier)
             {
                 return new PreUnaryExpNode(tStr[0].Value, new TokenString(tStr[1]));
@@ -62,7 +61,6 @@ namespace Shpoon.Parse.Nodes_2
             {
                 return new PostUnaryExpNode(tStr[1].Value, new TokenString(tStr[0]));
             }
-
 
             int bracNum = 0;
 
@@ -88,19 +86,43 @@ namespace Shpoon.Parse.Nodes_2
                 }
             }
 
+
             if (opToken == null)
             {
-                if (tStr.Match(0, TokenType.identifier, TokenType.rBraceOpen))
+                if (tStr.Match(0, TokenType.@new, TokenType.identifier, TokenType.rBraceOpen))
+                {
+                    ConstructionExpNode ceNode = new ConstructionExpNode(tStr[1].Value);
+
+                    var argRangesUnsplit = tStr.GetRangeInBrackets(2);
+                    
+                    if (argRangesUnsplit.Count > 0)
+                    {
+                        var argRanges = argRangesUnsplit.Split(false, TokenType.comma);
+
+                        foreach (var argRange in argRanges)
+                            ceNode.AddArgument(Exp.Parse(argRange));
+                    }
+
+                    return ceNode;
+                }
+                else if (tStr.Match(0, TokenType.identifier, TokenType.rBraceOpen))
                 {
                     MethodCallExpNode mceNode = new MethodCallExpNode(tStr[0].Value);
 
-                    var argRanges = tStr.GetRangeInBrackets(1).Split(false, TokenType.comma);
+                    var argRangesUnsplit = tStr.GetRangeInBrackets(1);
+                    
+                    if (argRangesUnsplit.Count > 0)
+                    {
+                        var argRanges = argRangesUnsplit.Split(false, TokenType.comma);
 
-                    foreach (var argRange in argRanges)
-                        mceNode.AddArgument(Exp.Parse(argRange));
+                        foreach (var argRange in argRanges)
+                            mceNode.AddArgument(Exp.Parse(argRange));
+                    }
+
+                    return mceNode;
                 }
-                else
-                    return null;
+
+                return null;
             }
 
             int tIndex = tStr.IndexOf(opToken);
